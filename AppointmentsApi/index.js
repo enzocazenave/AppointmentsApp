@@ -3,8 +3,11 @@ require('dotenv').config();
 const cors = require('cors');
 
 const logger = require('morgan');
+const { dbConnection } = require('./database/config');
 
 const app = express();
+
+dbConnection();
 
 app.use(cors());
 app.use(express.json());
