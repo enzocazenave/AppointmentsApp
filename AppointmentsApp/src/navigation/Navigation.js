@@ -25,7 +25,7 @@ export const StackNavigation = () => {
             }}
         >   
             {
-                (user.name)
+                (user.id)
                     ? (
                         <>
                             <Stack.Screen name="HomeScreen" component={ HomeScreen } />

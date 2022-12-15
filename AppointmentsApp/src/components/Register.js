@@ -3,6 +3,7 @@ import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AuthContext } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { useFade } from '../hooks/useFade';
 import { useForm } from '../hooks/useForm';
 
@@ -20,6 +21,7 @@ export const Register = () => {
     const { setAction } = useContext(AuthContext);
     const { email, name, surname, phone, password, onInputChange } = useForm(initialForm);
     const { opacity, fadeIn } = useFade();
+    const { register, registerError } = useAuth();
     
     useEffect(() => {
         fadeIn();
@@ -74,9 +76,13 @@ export const Register = () => {
                     onChangeText={ (text) => onInputChange(text, 'password') }
                 />
 
+                { (registerError) && <Text style={ styles.errorText }>{ registerError }</Text> }
+
+
                 <TouchableOpacity 
                     style={ styles.formButton }
                     activeOpacity={ 0.8 }
+                    onPress={ () => register({ name, surname, email, phone, password }) }
                 >
                     <Text style={ styles.formButtonText }>Crear cuenta</Text>
                 </TouchableOpacity>
@@ -125,6 +131,7 @@ const styles = StyleSheet.create({
     },
     formButton: {
         margin: 5,
+        marginTop: 15,
         padding: 10,
         backgroundColor: '#0059F6',
         borderRadius: 5,

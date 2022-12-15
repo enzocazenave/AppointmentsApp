@@ -3,6 +3,7 @@ import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AuthContext } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { useFade } from '../hooks/useFade';
 import { useForm } from '../hooks/useForm';
 
@@ -14,18 +15,12 @@ const initialForm = {
 export const Login = () => {
 
     const { top } = useSafeAreaInsets();
-    const { setAction, setUser } = useContext(AuthContext);
+    const { setAction } = useContext(AuthContext);
     const { email, password, onInputChange } = useForm(initialForm);
     const { opacity, fadeIn } = useFade();
+    const { login, loginError } = useAuth();
 
     const disabled = !(email.length > 0 && password.length > 0);
-
-    const handleSubmit = () => {
-        setUser({
-            email, 
-            password
-        })
-    }
 
     useEffect(() => {
         fadeIn();
@@ -54,8 +49,10 @@ export const Login = () => {
                     
                 />
 
+                { (loginError) && <Text style={ styles.errorText }>{ loginError }</Text> }
+
                 <TouchableOpacity 
-                    onPress={ handleSubmit }
+                    onPress={ () => login({ email, password }) }
                     style={ styles.formButton }
                     disabled={ disabled }
                 >
@@ -108,6 +105,7 @@ const styles = StyleSheet.create({
     },
     formButton: {
         margin: 5,
+        marginTop: 15,
         padding: 10,
         backgroundColor: '#0059F6',
         borderRadius: 5,
@@ -121,5 +119,9 @@ const styles = StyleSheet.create({
         color: '#aaa',
         textAlign: 'center',
         marginTop: 20 
+    },
+    errorText: {
+        color: '#f00',
+        textAlign: 'center'
     }
 });
