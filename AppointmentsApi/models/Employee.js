@@ -22,4 +22,4 @@ const EmployeeSchema = Schema({
     },
 });
 
-module.exports = model('User', EmployeeSchema);
+module.exports = model('Employee', EmployeeSchema);

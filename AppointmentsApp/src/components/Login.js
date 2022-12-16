@@ -46,7 +46,6 @@ export const Login = () => {
                     placeholder="Contraseña"
                     value={ password }
                     onChangeText={ (text) => onInputChange(text, 'password') }
-                    
                 />
 
                 { (loginError) && <Text style={ styles.errorText }>{ loginError }</Text> }

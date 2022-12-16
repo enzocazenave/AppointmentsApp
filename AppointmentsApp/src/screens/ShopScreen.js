@@ -16,9 +16,7 @@ export const ShopScreen = ({ route, navigation }) => {
             <Text style={ styles.subTitle }>{ shop.type }</Text>
             <Text style={ styles.title }>{ shop.name }</Text>
             <Text style={ styles.subTitle }>{ shop.location }</Text>
-            <Text style={ styles.text }>
-                Incididunt elit aliqua laborum minim occaecat. Sit consequat cillum nisi adipisicing ullamco labore labore. Ullamco ex anim culpa amet consequat proident duis et consequat ullamco irure esse.
-            </Text>
+            <Text style={ styles.text }>{ shop.text }</Text>
             <TouchableOpacity
                 activeOpacity={ 0.8 }
                 style={ styles.button }

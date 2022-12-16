@@ -1,7 +1,24 @@
 const { Router } = require('express');
-const { createShop } = require('../controllers/shop');
+const { createShop, getShops } = require('../controllers/shop');
+const { check } = require('express-validator');
+const { fieldValidator } = require('../middlewares/fieldValidator');
 const router = Router();
 
-router.get('/new', createShop);
+router.post('/new',
+    [
+        check('name', 'El nombre del comercio es obligatorio.').not().isEmpty(),
+        check('type', 'El tipo de comercio es obligatorio').not().isEmpty(),
+        check('location', 'La ubicación del comercio es obligatoria.').not().isEmpty(),
+        check('text', 'La descripción del comercio es obligatoria').not().isEmpty(),
+        check('image', 'La imagen de fondo del comercio es obligatoria').isURL(),
+        check('config', 'Debes setear la configuración del comercio').isObject(),
+        check('username', 'El nombre de usuario del comercio es obligatorio').not().isEmpty(),
+        check('password', 'La contraseña debe tener 6 o más caractéres.').isLength({ min: 6 }),
+        fieldValidator
+    ],
+    createShop
+);
+
+router.get('/all', getShops);
 
 module.exports = router;

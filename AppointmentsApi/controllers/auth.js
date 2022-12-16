@@ -11,7 +11,7 @@ const registerUser = async(req, res = response) => {
 
         if (user) return res.status(400).json({
             ok: false,
-            msg: `El correo electrónico '${ email }' está en uso`
+            msg: `El correo electrónico '${ email }' está en uso.`
         });
 
         user = new User(req.body);

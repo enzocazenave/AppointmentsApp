@@ -36,4 +36,4 @@ const ShopSchema = Schema({
     }
 });
 
-module.exports = model('Appointment', ShopSchema);
+module.exports = model('Shop', ShopSchema);

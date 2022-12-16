@@ -22,8 +22,22 @@ export const useFetch = () => {
         }
     }
 
+    const getShopsData = async() => {
+        setIsFetching(true);
+        
+        try {
+            const { data } = await api.get('/shop/all');
+            setIsFetching(false);
+            return data.shops;
+        } catch(error) {
+            setFetchError('Ocurrió un error al cargar los datos del usuario.');
+            setIsFetching(false);
+        }
+    }
+
     return {
         getUserData,
+        getShopsData,
         isFetching,
         fetchError
     }
