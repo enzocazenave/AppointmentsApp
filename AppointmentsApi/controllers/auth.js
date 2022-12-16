@@ -1,6 +1,7 @@
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 const registerUser = async(req, res = response) => {
     const { email, password } = req.body;
@@ -20,11 +21,11 @@ const registerUser = async(req, res = response) => {
 
         await user.save();
 
-        res.status(201).json({
-            ok: true,
-            email,
-            id: user.id
-        });
+        const payload = { id: user.id, email }
+        const token = jwt.sign(payload, process.env.SECRET_KEY_JWT, { expiresIn: '2h' });
+        payload.token = token;
+
+        res.status(201).json({ ok: true, ...payload });
     } catch(error) {
         console.log(error);
 
@@ -54,11 +55,11 @@ const loginUser = async(req, res = response) => {
             msg: 'Sus credenciales son incorrectas.'
         });
 
-        res.status(201).json({
-            ok: true,
-            email,
-            id: user.id
-        });
+        const payload = { id: user.id, email }
+        const token = jwt.sign(payload, process.env.SECRET_KEY_JWT, { expiresIn: '2h' });
+        payload.token = token;
+
+        res.status(201).json({ ok: true, ...payload });
     } catch(error) {
         console.log(error);
 
@@ -69,7 +70,10 @@ const loginUser = async(req, res = response) => {
     }
 }
 
+const validateUser = (req, res = response) => res.status(200).json({ ok: true, ...req.body });
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    validateUser
 }

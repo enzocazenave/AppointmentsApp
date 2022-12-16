@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
         marginTop: 20 
     },
     errorText: {
+        marginTop: 10,
         color: '#f00',
         textAlign: 'center'
     }

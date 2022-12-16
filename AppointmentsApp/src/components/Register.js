@@ -145,5 +145,10 @@ const styles = StyleSheet.create({
         color: '#0059F6',
         textAlign: 'center',
         marginTop: 20 
+    },
+    errorText: {
+        color: '#f00',
+        textAlign: 'center',
+        marginTop: 10
     }
 });
