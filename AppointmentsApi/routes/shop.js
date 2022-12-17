@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createShop, getShops, loginShop, validateShop } = require('../controllers/shop');
+const { createShop, getShops, loginShop, validateShop, getShop } = require('../controllers/shop');
 const { check } = require('express-validator');
 const { fieldValidator } = require('../middlewares/fieldValidator');
 const { tokenValidator } = require('../middlewares/tokenValidator');
@@ -30,6 +30,8 @@ router.post('/login',
 );
 
 router.get('/all', getShops);
+
+router.get('/id/:id', getShop);
 
 router.get('/validate', tokenValidator, validateShop);
 

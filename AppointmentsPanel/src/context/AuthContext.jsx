@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../api/api";
 
 export const AuthContext = createContext({});
@@ -8,6 +9,8 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({});
     const [isChecking, setIsChecking] = useState(false);
     const [loginError, setLoginError] = useState('');
+    const { path } = useLocation(); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         validateToken();
@@ -40,6 +43,17 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const logout = () => {
+        setIsChecking(true);
+        
+        if (localStorage.getItem('@appointments:token')) {
+            localStorage.removeItem('@appointments:token');
+        }
+
+        setUser({});
+        setIsChecking(false);
+    }
+
     const validateToken = async() => {
         setIsChecking(true);
         
@@ -51,7 +65,8 @@ export const AuthProvider = ({ children }) => {
                 setIsChecking(false);
                 return;
             }
-
+            
+            navigate(path);
             setUser(data);
             setIsChecking(false);
         } catch(error) {
@@ -66,6 +81,7 @@ export const AuthProvider = ({ children }) => {
             value={{
                 login,
                 loginError,
+                logout,
                 user,
                 isChecking
             }}

@@ -1,14 +1,15 @@
 import { useContext } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { LoginPage } from "../pages";
 import { LoadingPage } from "../pages/LoadingPage";
-import { AppRoutes } from "./routes/AppRoutes";
-
+import { AppRoutes } from "./AppRoutes";
+import { PrivateRoute } from "./PrivateRoute";
+import { PublicRoute } from "./PublicRoute";
 
 export const AppRouter = () => {
     
-    const { user, isChecking } = useContext(AuthContext);
+    const { isChecking } = useContext(AuthContext);
 
     if (isChecking) return (
         <LoadingPage />
@@ -16,13 +17,22 @@ export const AppRouter = () => {
 
     return (
         <Routes>
-            { 
-                (user.id) 
-                    ? <Route path="/*" element={ <AppRoutes /> } />
-                    : <Route path="/auth/login" element={ <LoginPage /> } />
-            }
-
-            <Route path="/*" element={ <Navigate to="/auth/login" /> } />
+            <Route 
+                path="/auth/login" 
+                element={
+                    <PublicRoute>
+                        <LoginPage />
+                    </PublicRoute>
+                }
+            />
+            <Route 
+                path="/*" 
+                element={
+                    <PrivateRoute>
+                        <AppRoutes />
+                    </PrivateRoute>
+                }
+            />
         </Routes>
     )
 }

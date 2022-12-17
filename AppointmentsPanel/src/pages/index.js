@@ -1,2 +1,6 @@
 export * from './LoginPage';
-export * from './Dashboard';
+export * from './AppointmentsPage';
+export * from './ClientsPage';
+export * from './EmployeesPage';
+export * from './MainPage';
+export * from './SettingsPage';

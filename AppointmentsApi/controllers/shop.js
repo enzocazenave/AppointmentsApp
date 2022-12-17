@@ -21,7 +21,7 @@ const createShop = async(req, res = response) => {
         await shop.save();
 
         const payload = { id: shop.id, username }
-        const token = jwt.sign(payload, process.env.SECRET_KEY_JWT, { expiresIn: '2h' });
+        const token = jwt.sign(payload, process.env.SECRET_KEY_JWT, { expiresIn: '24h' });
         payload.token = token;
 
         res.status(201).json({ ok: true, ...payload });
@@ -54,7 +54,7 @@ const loginShop = async(req, res = response) => {
         });
 
         const payload = { id: shop.id, username }
-        const token = jwt.sign(payload, process.env.SECRET_KEY_JWT, { expiresIn: '2h' });
+        const token = jwt.sign(payload, process.env.SECRET_KEY_JWT, { expiresIn: '24h' });
         payload.token = token;
 
         res.status(201).json({ ok: true, ...payload });
@@ -96,9 +96,15 @@ const getShops = async(req, res = response) => {
     }
 }
 
+const getShop = async(req, res = response) => {
+    const { id } = req.params;
+    console.log(id)
+}
+
 module.exports = {
     createShop,
     loginShop,
     validateShop,
-    getShops
+    getShops,
+    getShop
 }
