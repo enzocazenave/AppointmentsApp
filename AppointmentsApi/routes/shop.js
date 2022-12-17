@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createShop, getShops } = require('../controllers/shop');
+const { createShop, getShops, loginShop } = require('../controllers/shop');
 const { check } = require('express-validator');
 const { fieldValidator } = require('../middlewares/fieldValidator');
 const router = Router();
@@ -17,6 +17,15 @@ router.post('/new',
         fieldValidator
     ],
     createShop
+);
+
+router.post('/login',
+    [
+        check('username', 'El nombre de usuario es obligatorio.').not().isEmpty(),
+        check('password', 'La contraseña debe tener 6 o más caractéres.').isLength({ min: 6 }),
+        fieldValidator
+    ],
+    loginShop
 );
 
 router.get('/all', getShops);
