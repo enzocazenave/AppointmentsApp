@@ -68,6 +68,8 @@ const loginShop = async(req, res = response) => {
     }
 }
 
+const validateShop = (req, res = response) => res.status(200).json({ ok: true, ...req.body });
+
 const getShops = async(req, res = response) => {
     try {
         const shops = await Shop.find().limit(5);
@@ -97,5 +99,6 @@ const getShops = async(req, res = response) => {
 module.exports = {
     createShop,
     loginShop,
+    validateShop,
     getShops
 }

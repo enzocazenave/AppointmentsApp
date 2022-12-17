@@ -1,7 +1,8 @@
 const { Router } = require('express');
-const { createShop, getShops, loginShop } = require('../controllers/shop');
+const { createShop, getShops, loginShop, validateShop } = require('../controllers/shop');
 const { check } = require('express-validator');
 const { fieldValidator } = require('../middlewares/fieldValidator');
+const { tokenValidator } = require('../middlewares/tokenValidator');
 const router = Router();
 
 router.post('/new',
@@ -29,5 +30,8 @@ router.post('/login',
 );
 
 router.get('/all', getShops);
+
+router.get('/validate', tokenValidator, validateShop);
+
 
 module.exports = router;

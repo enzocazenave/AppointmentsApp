@@ -77,3 +77,19 @@
     font-size: 14px;
     opacity: 0.8;
 }
+
+.alert {
+    background-color: rgba(212, 87, 87, 0.458);
+    border: 2px solid red;
+    max-width: 90%;
+    width: 25%;
+    padding: 10px;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+}
+
+.alertText {
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+}

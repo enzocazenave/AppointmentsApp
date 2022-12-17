@@ -12,7 +12,7 @@ const tokenValidator = (req, res, next) => {
         const data = verify(token, process.env.SECRET_KEY_JWT);
         req.body = {
             id: data.id,
-            email: data.email
+            email: data.email || data.username
         };
         next();
     } catch(error) {
