@@ -1,21 +1,21 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import classes from '../styles/components/Sidebar.module.css';
 
-export const Sidebar = () => {
+export const Sidebar = ({ title }) => {
 
     const { logout } = useContext(AuthContext);
 
     return (
         <div className={ classes.container }>
             <div>
-                <h2 className={ classes.title }>Panel</h2>
+                <h2 className={ classes.title }>Turnos</h2>
 
                 <div className={ classes.section }>
                     <NavLink className={ ({ isActive }) => `${ classes.button } ${ isActive ? classes.selected : '' }` } to="/">
                         <i className='fas fa-home'></i>
-                        Vista principal
+                        Panel
                     </NavLink>
                     <NavLink className={ ({ isActive }) => `${ classes.button } ${ isActive ? classes.selected : '' }` } to="/appointments">
                         <i className='far fa-calendar-alt'></i>

@@ -98,7 +98,29 @@ const getShops = async(req, res = response) => {
 
 const getShop = async(req, res = response) => {
     const { id } = req.params;
-    console.log(id)
+
+    try {
+        const shop = await Shop.findById(id);
+
+        if (!shop) return res.status(404).json({
+            ok: false,
+            msg: 'No existe ese comercio.'
+        });
+
+        delete shop._doc.password;
+        delete shop._doc.__v;
+        delete shop._doc.username;
+        delete shop._doc._id;
+
+        res.status(200).json({ ok: true, ...shop._doc });
+    } catch(error) {
+        console.log(error);
+
+        res.status(500).json({
+            ok: false,
+            msg: 'Ocurrió un error inesperado, por favor hablá con el administrador.'
+        });
+    }
 }
 
 module.exports = {
